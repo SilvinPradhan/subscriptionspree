@@ -34,9 +34,13 @@ exports.register = async (req, res) => {
         password: hashedPassword,
       }).save();
 
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+      });
+
       const { password, ...rest } = enduser._doc;
 
-      return res.json({ user: rest });
+      return res.json({ token, user: rest });
     } catch (err) {
       console.log(err);
     }
@@ -52,10 +56,15 @@ exports.login = async (req, res) => {
     if (!user) return res.json({ error: "There is no such user." });
     // check password
     const matched = await comparePassword(req.body.password, user.password);
-    if (!match) return res.json({ error: "Wrong Password" });
+    if (!matched) return res.json({ error: "Wrong Password" });
     // create signed token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn,
+      expiresIn: "7d",
+    });
+    const { password, ...rest } = user._doc;
+    res.json({
+      token,
+      user: rest,
     });
   } catch (err) {
     console.log(err);
