@@ -1,3 +1,6 @@
+const User = require("../models/user");
+const { hashPassword, comparePassword } = require("../helpers/auth");
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -16,9 +19,26 @@ exports.register = async (req, res) => {
         error: "Password is required and should be 6 characters long.",
       });
     }
-    res.json({
-      data: "This is /register endpoint.",
-    });
+    const exist = await User.findOne({ email });
+    if (exist) {
+      return res.json({
+        error: "Email is already taken.",
+      });
+    }
+    const hashedPassword = await hashPassword(password);
+    try {
+      const enduser = await new User({
+        name,
+        email,
+        password: hashedPassword,
+      }).save();
+
+      const { password, ...rest } = enduser._doc;
+
+      return res.json(rest);
+    } catch (err) {
+      console.log(err);
+    }
   } catch (err) {
     console.log(err);
   }
