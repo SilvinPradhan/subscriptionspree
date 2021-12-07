@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
     }
     const hashedPassword = await hashPassword(password);
     try {
-      const enduser = await new User({
+      const user = await new User({
         name,
         email,
         password: hashedPassword,
@@ -38,7 +38,7 @@ exports.register = async (req, res) => {
         expiresIn: "7d",
       });
 
-      const { password, ...rest } = enduser._doc;
+      const { password, ...rest } = user._doc;
 
       return res.json({ token, user: rest });
     } catch (err) {

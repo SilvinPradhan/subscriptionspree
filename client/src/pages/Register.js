@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "../components/Button/Button";
 import Input from "../components/Inputs/Input";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { UserContext } from "../context";
 
 const Register = ({ history }) => {
   const [name, setName] = useState("SilvinPradhan");
   const [email, setEmail] = useState("silvinpradhan95@gmail.com");
   const [password, setPassword] = useState("Invoker20069@@");
+  const [state, setState] = useContext(UserContext);
+
   const handleClick = async (e) => {
-    console.log({ name, email, password });
+    // console.log({ name, email, password });
     try {
       e.preventDefault();
       const { data } = await axios.post("http://localhost:8000/api/register", {
@@ -24,6 +27,7 @@ const Register = ({ history }) => {
         setEmail("");
         setPassword("");
         toast.success(`You are a part of our team now. ${data.user.name}`);
+        setState(data);
         localStorage.setItem("auth", JSON.stringify(data));
         history.push("/");
       }

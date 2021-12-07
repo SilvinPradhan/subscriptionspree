@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { isAuth } from "../../utils/functions";
+// import { isAuth } from "../../utils/functions";
 import { useHistory } from "react-router";
 import { UserContext } from "../../context";
 
@@ -8,11 +8,12 @@ const NavBar = () => {
   const [state, setState] = useContext(UserContext);
   const history = useHistory();
   const logout = () => {
+    setState({ user: "", token: "" });
     localStorage.removeItem("auth");
     history.push("/login");
   };
 
-  console.log("STATE = ", state);
+  // console.log("STATE = ", state);
 
   return (
     <div>
@@ -34,7 +35,7 @@ const NavBar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {isAuth() ? (
+              {state && state.token ? (
                 <>
                   <li className="nav-item">
                     <span
