@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const PriceCard = () => {
+const PriceCard = ({ price }) => {
   return (
     <div className="col-xs-12 col-lg-4">
       <div className="card text-xs-center">
@@ -26,6 +26,7 @@ const PriceCard = () => {
               <span className="text-muted">24/7 Support System</span>
             </li>
           </ul>
+          <pre>{JSON.stringify(price, null, 4)}</pre>
           <Link to="/" className="btn btn-gradient mt-2">
             Choose Plan
           </Link>
