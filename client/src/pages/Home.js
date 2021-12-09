@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Home.scss";
 
 const Home = () => {
-  const [prices, setPrices] = useState([]);
+  const [price, setPrices] = useState([]);
   useEffect(() => {
     fetchPrices();
   }, []);
@@ -32,12 +32,12 @@ const Home = () => {
           <p className="lead pb-4">Choose a plan that suites your best!</p>
         </div>
         <div className="row flex-items-xs-middle flex-items-xs-center sub-body">
-          {prices &&
-            prices.map((price) => (
+          {price &&
+            price.map((prices) => (
               <PriceCard
                 key={price.id}
                 price={prices}
-                handleClick={handleClick}
+                handleSubscription={handleClick}
               />
             ))}
         </div>
