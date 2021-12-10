@@ -37,7 +37,7 @@ const Home = () => {
               <PriceCard
                 key={price.id}
                 price={prices}
-                handleSubscription={handleClick}
+                handleClick={handleClick}
               />
             ))}
         </div>

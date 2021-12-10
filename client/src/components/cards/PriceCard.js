@@ -50,12 +50,13 @@ const PriceCard = ({ price, handleSubscription }) => {
               <span className="text-muted">24/7 Support System</span>
             </li>
           </ul>
-          <Link
-            onClick={() => handleSubscription(price)}
-            to="/"
-            className="btn btn-gradient mt-2"
-          >
-            Choose Plan
+          <Link to="/register">
+            <button
+              // onClick={() => handleSubscription(price)}
+              className="btn btn-gradient mt-2"
+            >
+              Choose Plan
+            </button>
           </Link>
         </div>
       </div>
