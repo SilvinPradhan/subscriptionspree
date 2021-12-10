@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../context";
 
 const PriceCard = ({ price, handleSubscription }) => {
+  const [state] = useContext(UserContext);
   const dynamicDescription = (price) => {
     if (price.nickname === "BASIC") {
       return "Low Features";
@@ -15,6 +17,10 @@ const PriceCard = ({ price, handleSubscription }) => {
     if (price.nickname === "PREMIUM") return "text-warning";
     else if (price.nickname === "STANDARD") return "text-primary";
     else if (price.nickname === "BASIC") return "text-info";
+  };
+
+  const buttonText = () => {
+    return state && state.token ? "Choose Plan" : "Sign up";
   };
 
   return (
@@ -55,7 +61,7 @@ const PriceCard = ({ price, handleSubscription }) => {
               // onClick={() => handleSubscription(price)}
               className="btn btn-gradient mt-2"
             >
-              Choose Plan
+              {buttonText()}
             </button>
           </Link>
         </div>
